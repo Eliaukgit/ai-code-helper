@@ -53,5 +53,10 @@ class AiCodeHelperServiceTest {
         System.out.println(result);
     }
 
+    @Test
+    void chatWithMcp() {
+        String result = aiCodeHelperService.chat("什么是程序员鱼皮的编程导航？");
+        System.out.println(result);
+    }
 
 }

@@ -1,6 +1,7 @@
 package com.bear.aicodehelper.ai;
 
 import com.bear.aicodehelper.ai.tools.InterviewQuestionTool;
+import dev.langchain4j.mcp.McpToolProvider;
 import dev.langchain4j.memory.ChatMemory;
 import dev.langchain4j.memory.chat.MessageWindowChatMemory;
 import dev.langchain4j.model.chat.ChatModel;
@@ -23,16 +24,25 @@ public class AiCodeHelperServiceFactory {
     @ Resource
     private ContentRetriever contentRetriever;
 
+
+    @Resource
+    private McpToolProvider mcpToolProvider;
+
     @Bean
     public AiCodeHelperService aiCodeHelperService() {
         // 会话记忆
         ChatMemory chatMemory = MessageWindowChatMemory.withMaxMessages(10);
         // 构建AI代码助手服务实例，集成聊天模型、会话记忆和RAG内容检索功能
         AiCodeHelperService aiCodeHelperService = AiServices.builder(AiCodeHelperService.class)
+                // 配置通义千问聊天模型用于对话生成
                 .chatModel(qwenChatModel)
+                // 配置会话记忆窗口，保持对话上下文连贯性
                 .chatMemory(chatMemory)
+                // 配置RAG内容检索器，从文档中检索相关信息增强回答
                 .contentRetriever(contentRetriever)
+                // 注册自定义工具：面试问题生成工具
                 .tools(new InterviewQuestionTool())
+                .toolProvider(mcpToolProvider) // MCP 工具调用
                 .build();
         return aiCodeHelperService;
     }
