@@ -28,6 +28,9 @@ public class AiCodeHelperServiceFactory {
     @Resource
     private McpToolProvider mcpToolProvider;
 
+    @Resource
+    private ChatModel myQwenChatModel;
+
     @Bean
     public AiCodeHelperService aiCodeHelperService() {
         // 会话记忆
@@ -35,7 +38,7 @@ public class AiCodeHelperServiceFactory {
         // 构建AI代码助手服务实例，集成聊天模型、会话记忆和RAG内容检索功能
         AiCodeHelperService aiCodeHelperService = AiServices.builder(AiCodeHelperService.class)
                 // 配置通义千问聊天模型用于对话生成
-                .chatModel(qwenChatModel)
+                .chatModel(myQwenChatModel)
                 // 配置会话记忆窗口，保持对话上下文连贯性
                 .chatMemory(chatMemory)
                 // 配置RAG内容检索器，从文档中检索相关信息增强回答

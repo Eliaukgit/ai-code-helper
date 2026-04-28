@@ -59,4 +59,10 @@ class AiCodeHelperServiceTest {
         System.out.println(result);
     }
 
+    @Test
+    void chatWithGuardrail() {
+        String result = aiCodeHelperService.chat("the game");
+        System.out.println(result);
+    }
+
 }

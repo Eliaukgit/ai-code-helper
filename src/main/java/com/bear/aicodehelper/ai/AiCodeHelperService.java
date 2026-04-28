@@ -1,9 +1,13 @@
 package com.bear.aicodehelper.ai;
 
+import com.bear.aicodehelper.ai.guardrail.SafeInputGuardrail;
 import dev.langchain4j.service.Result;
 import dev.langchain4j.service.SystemMessage;
+import dev.langchain4j.service.guardrail.InputGuardrails;
+
 import java.util.List;
 
+@InputGuardrails(SafeInputGuardrail.class)
 //@AiService
 public interface AiCodeHelperService {
 
